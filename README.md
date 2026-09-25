@@ -34,7 +34,7 @@ Videoları agresif şekilde sıkıştırmak, nostaljik çamur kalitesine çekmek
 
 1. Repoyu klonlayın:
    ```bash
-   git clone https://github.com/<KULLANICI_ADIN>/shit-ur-media-android.git
+   git clone https://github.com/saboxx3/shit-ur-media-android.git
    ```
 2. Projeyi **Android Studio** ile açın.
 3. Gradle senkronizasyonunu tamamlayıp APK çıktısını alın:

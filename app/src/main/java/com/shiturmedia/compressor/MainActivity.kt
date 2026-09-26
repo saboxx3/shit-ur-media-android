@@ -7,6 +7,7 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -18,6 +19,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -655,6 +657,8 @@ private fun EffectToggleRow(
 // ─── In-App Video Player ──────────────────────────────────────────────────────────
 @Composable
 private fun VideoPlayerSection(file: File) {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -700,6 +704,53 @@ private fun VideoPlayerSection(file: File) {
             color    = TextSecond,
             fontSize = 11.sp
         )
+
+        // ── Action Buttons ────────────────────────────────────────────────────
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Button(
+                onClick = {
+                    val savedUri = saveVideoToGallery(context, file)
+                    if (savedUri != null) {
+                        Toast.makeText(context, "Video Galeriye Kaydedildi!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Galeriye kaydedilemedi.", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Accent,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(
+                    text = "Galeriye Kaydet",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+
+            OutlinedButton(
+                onClick = {
+                    shareVideo(context, file)
+                },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, AccentLight),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = AccentLight
+                )
+            ) {
+                Text(
+                    text = "Paylaş",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
     }
 }
 
